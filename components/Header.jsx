@@ -1,3 +1,5 @@
+import { FaUser, FaSignInAlt, FaSignOutAlt, FaBuilding } from 'react-icons/fa';
+
 const Header = () => {
   return (
     <header className="bg-gray-100">
@@ -5,7 +7,7 @@ const Header = () => {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
             <a href="/">
-              <img className="h-12 w-12" src="../assets/images/logo.jpg" alt="Bookit" />
+              <img className="h-12 w-12" src="../assests/images/logo.jpg" alt="Bookit" />
             </a>
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4">
@@ -39,22 +41,22 @@ const Header = () => {
                 href="login.html"
                 className="mr-3 text-gray-800 hover:text-gray-600"
               >
-                <i className="fa fa-sign-in"></i> Login
+                <FaSignInAlt className='inline mr-1'/> Login
               </a>
               <a
                 href="register.html"
                 className="mr-3 text-gray-800 hover:text-gray-600"
               >
-                <i className="fa fa-user"></i> Register
+                <FaUser className='inline mr-1'/> Register
               </a>
               <a href="my-rooms.html">
-                <i className="fa fa-building"></i> My Rooms
+                <FaBuilding className='inline mr-1'/> My Rooms
               </a>
               <a
                 href="login.html"
                 className="mx-3 text-gray-800 hover:text-gray-600"
               >
-                <i className="fa fa-sign-out"></i> Sign Out
+                <FaSignOutAlt className='inline mr-1'/> Sign Out
               </a>
             </div>
           </div>
