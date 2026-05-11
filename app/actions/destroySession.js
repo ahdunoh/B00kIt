@@ -31,7 +31,7 @@ async function destroySession() {
         return {
             error: "Error deleting session.",
         };
-    };
+    }
 }
 
 export default destroySession;
