@@ -16,6 +16,10 @@ async function createRoom (previousState, formData) {
             }
         }
 
+        const userId = user.user.id;
+
+        console.log("Creating room for user:", userId);
+
         // Uploading image to storage
         let imageID;
         
@@ -38,11 +42,11 @@ async function createRoom (previousState, formData) {
 
         //Create room
         const newRoom = await databases.createDocument(
-            process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+            process.env.NEXT_PUBLIC_APPWRITE_DATABASE,
             process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ROOMS,
             ID.unique(),
             {
-                user_id: user.id,
+                user_id: userId,
                 name: formData.get("name"),
                 description: formData.get("description"),
                 sqft: formData.get("sqft"),

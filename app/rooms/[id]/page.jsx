@@ -9,6 +9,8 @@ const RoomPage = async ({ params }) => {
     const {id} = await params; {/*await the params promise*/}
     const room = await getSingleRoom(id);
 
+    console.log("Fetching room with ID:", id);
+
     if(!room) {
         return <Heading title = 'Room Not Found'/>;
     }

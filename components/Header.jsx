@@ -55,7 +55,13 @@ const Header = () => {
                     >
                       Add Room
                     </a>
-                      </>
+                    <a
+                      href="/Rooms/my"
+                      className="rounded-md px-3 py-2 text-sm font-medium text-gray-800 hover:bg-gray-700 hover:text-white"
+                    >
+                      My Rooms
+                    </a>
+                  </>
                 )}
               </div>
             </div>
@@ -83,7 +89,7 @@ const Header = () => {
 
               { isAuthenticated && (
               <>
-                <a href="/my-rooms">
+                <a href="/Rooms/my">
                   <FaBuilding className='inline mr-1'/> My Rooms
                 </a>
                 <button onClick={handleLogout} className="mx-3 text-gray-800 hover:text-gray-600">
