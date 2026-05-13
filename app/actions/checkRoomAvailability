@@ -1,0 +1,64 @@
+"use server";
+
+import { createSessionClient } from "../../config/appwrite";
+import { cookies } from "next/headers";
+import { Query } from "node-appwrite";
+import { redirect } from "next/navigation";
+import { DateTime } from "luxon";
+
+// Convert a date string to a UTC DateTime object using Luxon
+function toUTCDateTime(dateString) {
+    return DateTime.fromISO (dateString, { zone: "utc" }).toUTC();
+}
+
+// Check for overlapping date ranges
+function dateRangesOverlap(checkInA, checkOutA, checkInB, checkOutB) {
+    return checkInA < checkOutB && checkOutA > checkInB;
+}
+
+async function checkRoomAvailability(roomId, checkIn, checkOut) {
+    const cookieStore = await cookies();
+    const sessionCookie = cookieStore.get("appwrite-session");
+
+    if (!sessionCookie) {
+        redirect("/login");
+    }
+
+    try {
+        const { databases } = await createSessionClient(sessionCookie.value);
+        
+        const databaseId = process.env.NEXT_PUBLIC_APPWRITE_DATABASE;
+        const collectionId = process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_BOOKINGS;
+
+        const checkInDateTime = toUTCDateTime(checkIn);
+        const checkOutDateTime = toUTCDateTime(checkOut);
+
+        // Fetch all bookings for a given room
+        const { documents: bookings } = await databases.listDocuments(
+            databaseId, 
+            collectionId,
+            [Query.equal("room_id", roomId)]
+        );
+        
+        // Loop over bookings and check for overlaps
+        for (const booking of bookings) {
+            const bookingCheckInDateTime = toUTCDateTime(booking.check_in);
+            const bookingCheckOutDateTime = toUTCDateTime(booking.check_out);
+
+            if (dateRangesOverlap(checkInDateTime, checkOutDateTime, bookingCheckInDateTime, bookingCheckOutDateTime)) {
+                return false;
+            }
+        }
+
+        // No overlap
+        return true;
+
+    } catch (error) {
+        console.error("Failed to check room availability", error.message);
+        return {
+            error: "Failed to check room availability. Please try again later."
+        };
+    }
+}
+
+export default checkRoomAvailability;
