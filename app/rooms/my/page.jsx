@@ -1,6 +1,6 @@
-import Heading from "@/components/Heading";
-import MyRoomCard from "@/components/MyRoomCard";
-import getMyRooms from "@/app/actions/getMyRooms";
+import Heading from "../../../components/Heading";
+import MyRoomCard from "../../../components/MyRoomCard";
+import getMyRooms from "../../actions/getMyRooms";
 
 const MyRoomsPage = async () => {
     const rooms = await getMyRooms();

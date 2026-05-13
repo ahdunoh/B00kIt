@@ -1,10 +1,10 @@
 'use server';
 
-import { createSessionClient } from "@/config/appwrite";
+import { createSessionClient } from "../../config/appwrite";
 import { cookies } from "next/headers";
 import { Query } from "node-appwrite";
 import { redirect } from "next/navigation";
-import { revalidatePath } from 'next/cache';
+import { revalidatePath } from "next/cache";
 
 async function deleteRoom(roomId) {
     const cookieStore = await cookies();

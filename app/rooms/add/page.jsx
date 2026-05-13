@@ -4,8 +4,8 @@ import { useEffect } from "react";
 import { useActionState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import createRoom from "@/app/actions/createRoom";
-import Heading from "@/components/Heading";
+import createRoom from "../../actions/createRoom";
+import Heading from "../../../components/Heading";
 
 const AddRoomPage = () => {
     const [state, formAction] = useActionState(createRoom, {});

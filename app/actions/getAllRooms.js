@@ -1,6 +1,6 @@
-'use server';
+"use server";
 
-import { createAdminClient } from "@/config/appwrite";
+import { createAdminClient } from "../../config/appwrite";
 
 async function getAllRooms() {
     try {

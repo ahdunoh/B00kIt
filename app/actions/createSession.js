@@ -1,14 +1,14 @@
 'use server';
-import { createAdminClient } from "@/config/appwrite";
+import { createAdminClient } from "../../config/appwrite";
 import { cookies } from "next/headers";
 
 async function createSession(previousState, formData) {
-    const email = formData.get('email');
-    const password = formData.get('password');
+    const email = formData.get("email");
+    const password = formData.get("password");
 
     if(!email || !password) {
         return {
-            error: 'Please fill in all required fields',
+            error: "Please fill in all required fields",
         };
     }
 

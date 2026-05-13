@@ -1,9 +1,9 @@
-import Heading from "@/components/Heading";
+import Heading from "../../../components/Heading";
 import Image from "next/image";
-import BookingForm from "@/components/BookingForm";
+import BookingForm from "../../../components/BookingForm";
 import { FaChevronLeft } from 'react-icons/fa'
 import rooms from "@/data/rooms.json";
-import getSingleRoom from "@/app/actions/getSingleRoom";
+import getSingleRoom from "../../actions/getSingleRoom";
 
 const RoomPage = async ({ params }) => {
     const {id} = await params; {/*await the params promise*/}
