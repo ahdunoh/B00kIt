@@ -39,12 +39,34 @@ async function bookRoom(previousState, formData) {
         const checkOutTime = formData.get("check_out_time");
         const roomId = formData.get("room_id");
 
-        // Combine date and time into a standard time format (e.g., ISO string)
-        const checkInDateTime = `${checkInDate}T${checkInTime}`;
-        const checkOutDateTime =`${checkOutDate}T${checkOutTime}`;
+        // Validate all fields are present
+        if (!checkInDate || !checkInTime || !checkOutDate || !checkOutTime || !roomId) {
+            return { error: "All fields are required." };
+        }
+
+        // Create DateTime objects for validation
+        const checkInDateTime = new Date(`${checkInDate}T${checkInTime}:00`);
+        const checkOutDateTime = new Date(`${checkOutDate}T${checkOutTime}:00`);
+        const now = new Date();
+
+        // Server-side date validation
+        if (checkInDateTime < now) {
+            return { error: "Check-in date and time cannot be in the past." };
+        }
+
+        if (checkOutDateTime <= checkInDateTime) {
+            return { error: "Check-out must be after check-in." };
+        }
+
+        // Check duration (max 30 days)
+        const durationMs = checkOutDateTime - checkInDateTime;
+        const maxDurationMs = 30 * 24 * 60 * 60 * 1000;
+        if (durationMs > maxDurationMs) {
+            return { error: "Booking duration cannot exceed 30 days." };
+        }
 
         // Check room availability
-        const isAvailable = await checkRoomAvailability(roomId, checkInDateTime, checkOutDateTime);
+        const isAvailable = await checkRoomAvailability(roomId, checkInDateTime.toISOString(), checkOutDateTime.toISOString());
         if (!isAvailable) {
             return {
                 error: "Room is not available for the selected dates."

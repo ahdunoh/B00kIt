@@ -57,8 +57,8 @@ const RoomPage = async ({ params }) => {
                 <Image
                     src={imageSrc}
                     alt={room.name}
-                    width = "400"
-                    height = "100"
+                    width = {400}
+                    height = {100}
                     className="w-full sm:w-1/3 h-64 object-cover rounded-lg"
                 />
 
