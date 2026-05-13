@@ -19,16 +19,17 @@ async function bookRoom(previousState, formData) {
         const { databases } = await createSessionClient(sessionCookie.value);
         
         const databaseId = process.env.NEXT_PUBLIC_APPWRITE_DATABASE;
-        const collectionId = process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ROOMS;
+        const collectionId = process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_BOOKINGS;
 
         // Get user ID
         const user = await checkAuth();
-
         if (!user) {
             return {
                 error: "You are not logged in. Please log in to book a room.",
             }
         }
+
+        const userId = user.user.id;
 
         // Extract the date and time from the form data
         const checkInDate = formData.get("check_in_date");
@@ -43,7 +44,7 @@ async function bookRoom(previousState, formData) {
         const bookingDate = {
             check_in: checkInDateTime,
             check_out: checkOutDateTime,
-            user_id: user.$id,
+            user_id: userId,
             room_id: formData.get("room_id")
         }
 

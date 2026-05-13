@@ -12,7 +12,7 @@ const RoomCard = ({ room }) => {
       imageSrc = `https://cloud.appwrite.io/v1/storage/buckets/${bucketID}/files/${room.image}/view?project=${projectID}`;
     } else {
       // Use local image from public folder with absolute path
-      imageSrc = "/assests/images/no-image.jpg"; // ✅ Starts with / (absolute path)
+      imageSrc = "/assets/images/no-image.jpg"; // ✅ Starts with / (absolute path)
     }
 
   return ( 

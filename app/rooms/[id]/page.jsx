@@ -1,6 +1,6 @@
 import Heading from "../../../components/Heading";
 import Image from "next/image";
-import BookingForm from "../../../components/BookingForm";
+import BookingForm from "@/components/BookingForm";
 import { FaChevronLeft } from 'react-icons/fa'
 import rooms from "@/data/rooms.json";
 import getSingleRoom from "../../actions/getSingleRoom";
@@ -15,6 +15,19 @@ const RoomPage = async ({ params }) => {
         return <Heading title = 'Room Not Found'/>;
     }
 
+    const serializedRoom = {
+        $id: room.$id,
+        name: room.name,
+        description: room.description,
+        address: room.address,
+        location: room.location,
+        availability: room.availability,
+        sqft: room.sqft,
+        capacity: room.capacity,
+        amenities: room.amenities,
+        image: room.image,
+    };
+
     const bucketID = process.env.NEXT_PUBLIC_APPWRITE_STORAGE_BUCKET_ROOMS;
   
     const projectID = process.env.NEXT_PUBLIC_APPWRITE_PROJECT;
@@ -25,7 +38,7 @@ const RoomPage = async ({ params }) => {
       imageSrc = `https://cloud.appwrite.io/v1/storage/buckets/${bucketID}/files/${room.image}/view?project=${projectID}`;
     } else {
       // Use local image from public folder with absolute path
-      imageSrc = "/assests/images/no-image.jpg"; // ✅ Starts with / (absolute path)
+      imageSrc = "/assets/images/no-image.jpg"; // ✅ Starts with / (absolute path)
     }
 
     return (
@@ -69,7 +82,7 @@ const RoomPage = async ({ params }) => {
                     </ul>
                 </div>
             </div>
-            <BookingForm room = {room} />
+            <BookingForm room = {serializedRoom} />
         </div>
     </>
     );
