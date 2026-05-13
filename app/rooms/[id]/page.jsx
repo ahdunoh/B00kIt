@@ -19,9 +19,14 @@ const RoomPage = async ({ params }) => {
   
     const projectID = process.env.NEXT_PUBLIC_APPWRITE_PROJECT;
 
-    const imageUrl = `https://cloud.appwrite.io/v1/storage/buckets/${bucketID}/files/${room.image}/view?project=${projectID}`;
-
-    const imageSrc = room.image ? imageUrl : "../assests/images/no-image.jpg";
+    let imageSrc;
+    if (room.image) {
+      // Use Appwrite storage URL for uploaded images
+      imageSrc = `https://cloud.appwrite.io/v1/storage/buckets/${bucketID}/files/${room.image}/view?project=${projectID}`;
+    } else {
+      // Use local image from public folder with absolute path
+      imageSrc = "/assests/images/no-image.jpg"; // ✅ Starts with / (absolute path)
+    }
 
     return (
     <>
@@ -64,7 +69,7 @@ const RoomPage = async ({ params }) => {
                     </ul>
                 </div>
             </div>
-            <BookingForm />
+            <BookingForm room = {room} />
         </div>
     </>
     );

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { useRouter } from "next/navigation";
 import { FaUser, FaSignInAlt, FaSignOutAlt, FaBuilding } from 'react-icons/fa';
 import destroySession from '@/app/actions/destroySession';

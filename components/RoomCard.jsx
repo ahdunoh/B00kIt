@@ -5,9 +5,15 @@ const RoomCard = ({ room }) => {
   
   const projectID = process.env.NEXT_PUBLIC_APPWRITE_PROJECT;
 
-  const imageUrl = `https://cloud.appwrite.io/v1/storage/buckets/${bucketID}/files/${room.image}/view?project=${projectID}`;
-
-  const imageSrc = room.image ? imageUrl : "../assests/images/no-image.jpg";
+    // Determine the image source
+    let imageSrc;
+    if (room.image) {
+      // Use Appwrite storage URL for uploaded images
+      imageSrc = `https://cloud.appwrite.io/v1/storage/buckets/${bucketID}/files/${room.image}/view?project=${projectID}`;
+    } else {
+      // Use local image from public folder with absolute path
+      imageSrc = "/assests/images/no-image.jpg"; // ✅ Starts with / (absolute path)
+    }
 
   return ( 
     <div className="bg-white shadow rounded-lg p-4 mt-4 flex flex-col sm:flex-row justify-between items-start sm:items-center">

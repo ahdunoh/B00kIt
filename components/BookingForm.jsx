@@ -1,14 +1,21 @@
-const BookingForm = () => {
+"use client";
+import createSession from "../app/actions/createSession";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { useActionState } from "react";
+import { toast } from "react-toastify";
+import bookRoom from "../app/actions/bookRoom";
+
+const BookingForm = ( { room }) => {
+    const [state, formAction] = useActionState(bookRoom, {});
     return (
         <div className="mt-6">
           <h2 className="text-xl font-bold">Book this Room</h2>
           <form className="mt-4">
+            <input type = "hidden" name="room_id" value={room.$id} />
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
-                <label
-                  htmlFor="check_in_date"
-                  className="block text-sm font-medium text-gray-700"
-                >
+                <label htmlFor="check_in_date" className="block text-sm font-medium text-gray-700">
                   Check-In Date
                 </label>
                 <input
@@ -20,10 +27,7 @@ const BookingForm = () => {
                 />
               </div>
               <div>
-                <label
-                  htmlFor="check_in_time"
-                  className="block text-sm font-medium text-gray-700"
-                >
+                <label htmlFor="check_in_time" className="block text-sm font-medium text-gray-700">
                   Check-In Time
                 </label>
                 <input
@@ -35,10 +39,7 @@ const BookingForm = () => {
                 />
               </div>
               <div>
-                <label
-                  htmlFor="check_out_date"
-                  className="block text-sm font-medium text-gray-700"
-                >
+                <label htmlFor="check_out_date" className="block text-sm font-medium text-gray-700">
                   Check-Out Date
                 </label>
                 <input
@@ -50,10 +51,7 @@ const BookingForm = () => {
                 />
               </div>
               <div>
-                <label
-                  htmlFor="check_out_time"
-                  className="block text-sm font-medium text-gray-700"
-                >
+                <label htmlFor="check_out_time" className="block text-sm font-medium text-gray-700">
                   Check-Out Time
                 </label>
                 <input
@@ -67,10 +65,7 @@ const BookingForm = () => {
             </div>
 
             <div className="mt-6">
-              <button
-                type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-black hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800"
-              >
+              <button formAction={formAction} className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-black hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800">
                 Book Room
               </button>
             </div>

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { AuthProvider } from '@/context/authContext';
 
 const AuthWrapper = ({ children }) => {
